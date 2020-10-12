@@ -79,8 +79,28 @@ def maxHeapify(i):
 def calculate_product(h):
     if len(h) < 3:
         return -1
+    p = 1
+    tmp = []
+    for _ in range(3):
+        p *= h[0]
+        tmp.append(h[0])
+        pop_first_element(h)
     
-    return h[0] * h[1] * h[2]
+    for i in tmp:
+        add_one_element(h, i)
+    
+    return p
+
+def pop_first_element(h):
+    n = len(h)
+    
+    if n == 0:
+        return 
+    
+    h[0] = h[n-1]
+    h.pop()
+    maxHeapify(0)
+
 
 def add_one_element(h, val):
     h.append(val)
@@ -89,10 +109,9 @@ def add_one_element(h, val):
     while i != 0 and h[(i - 1)//2] < h[i]:
         h[i], h[(i - 1)//2] = h[(i - 1)// 2], h[i]
         i = (i - 1)//2
-    
-    return calculate_product(h)
-
+ 
 A = [1, 2, 3, 4, 5]
 h = []
 for i in (A):
-    print(add_one_element(h, i))
+    add_one_element(h, i)
+    print(calculate_product(h))
